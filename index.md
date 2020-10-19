@@ -1,3 +1,3 @@
 Welcome to my Github Page.
 
-Here is a link to the survey I conducted of Fred Hutch technicians about the recently implemented parking changes.
+[a link](https://github.com/user/repo/blob/branch/other_file.md) to the survey I conducted of Fred Hutch technicians about the recently implemented parking changes.
