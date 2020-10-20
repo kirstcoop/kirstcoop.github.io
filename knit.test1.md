@@ -91,13 +91,23 @@ reality for many technicians, as they need to be able to process
 clinical samples or work during non-peak hours for specific experiments.
 When asked *“Would you consider a vanpool if the Hutch assisted in
 matching up vanpool users?”*, most respondents answered in the negative
-due to these scheduling issues.
+due to these scheduling
+issues.
 
-![](knit.test1_files/figure-gfm/sliding%20scale-1.png)<!-- -->
+![](knit.test1_files/figure-gfm/sliding%20scale-1.png)<!-- -->![](knit.test1_files/figure-gfm/sliding%20scale-2.png)<!-- -->
 
 A majority of respondents were in support of a sliding scale for the
-monthly parking fee. Most technicians are paid less than post-docs, thus
-the reduced rates is, at best, a confusing policy.
+monthly parking fee. Average monthly salaries for post docs and graduate
+students was taken from the [NIH National Research Service
+Awards](https://www.niaid.nih.gov/grants-contracts/salary-cap-stipends)
+set in February, 2020. “Post docs”, as refered in the above graph, is
+the average of levels Postdoc I throgh Postdoc 4. Average monthly
+salaries for technicians was obtained from [FHCRC Salary Ranges Nov 2019
+‐
+Oct 2020](https://centernet.fredhutch.org/cn/u/hr/payroll/_jcr_content/leftParsys/download_2/file.res/FHCRC%2520Salary%2520Ranges%25202019-2020.pdf).
+Technicians, particulary those with the title “Technician I”, face a
+similar financial burden of monthly parking when compared to graduate
+students.
 
 A few respondents proposed daily parking rates in addition to monthly
 parking passes.
