@@ -1,0 +1,266 @@
+---
+title: "Fred Hutch Transportation Tech Survey Results"
+author: "Compilied by Kirsten Cooper"
+date: 'Ver 1: 9/10/2020, Update: 10/19/2020'
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## TAG Survey Background
+
+This survey was sent out Sept. 3, 2020 to a listserv of Fred Hutch technicians. The language of the survey read *“The Technician Advocacy Group (TAG) would like to gather data on how technicians and other employees at the Hutch are potentially impacted by the newly reinstated parking fees, as announced in the 8/31 Director's Office COVID-19 Update. We appreciate your participation.”* This listserv was created 2 years ago, in collaboration with HR, so responses from newer technicians were not captured.
+
+The survey results were collected Sept 10, 2020, for presentation. By the time of collection, there were 59 unique responses
+
+
+## Respondent Job Statuses
+```{r job title and identity, echo = FALSE, message= FALSE}
+library(ggplot2)
+library(dplyr)
+library(forcats)
+position <- c("Research Technician", "Research Technician Supervisor",
+              "Staff Scientist", "Medical Laboratory Scientist 2 (UW affiliate)",
+              "Research Coordinator", "Clinical Research Coordinator", 
+              "Program Assistant/Clinical Trials Assistant")
+responses <- c(43, 2, 1, 1, 1, 3, 2)
+q1_position <- data.frame(position, responses, stringsAsFactors=FALSE)
+q1_position %>%
+  mutate(position= fct_reorder(position, responses)) %>%
+  ggplot(aes(x=position, y=responses)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#89c348") +
+  geom_text(aes(label=responses, y = responses + 1.5)) +
+  coord_flip() +
+  labs(title= "\n\nWhat is your job title?", x = "", y = "Responses") +
+  theme_minimal()
+responses <- c("Yes", "No")
+essential <- c(55, 4)
+covid <- c(16, 43)
+status <- data.frame(responses, essential, covid, stringsAsFactors=FALSE)
+  
+status %>%
+  #mutate(mode= fct_reorder(mode, before)) %>%
+  ggplot(aes(x=responses, y= essential)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#39b6b9") +
+  geom_text(aes(label=essential, y = essential + 1.5)) +
+  coord_flip() +
+  labs(title= "Are you considered an essential employee by the Hutch?", 
+       x = "", y = "") +
+  theme_minimal()
+status %>%
+  #mutate(mode= fct_reorder(mode, before)) %>%
+  ggplot(aes(x=responses, y= covid)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#207c7e") +
+  geom_text(aes(label=covid, y = covid + 1.5)) +
+  coord_flip() +
+  labs(title= "Are you currently working on a project related to the COVID-19 response?", 
+       x = "", y= "") +
+  theme_minimal()
+```
+
+The predominant job title of respondents was some variation of “Research Technician”, which fits with listserv makeup. A majority of respondants are considered an essential employee by the Hutch. 27% of respondants are currently working on a project related to the COVID-19 response.
+
+## Work locations
+```{r time on campus, echo=FALSE}
+onsite <- c("Working onsite at the Hutch full-time", 
+            "Working onsite at the Hutch 3-4 days a week", 
+            "Working onsite at the Hutch 1-2 days a week",
+            "Working from home full-time")
+before <- c(51, 4, 1, 2)
+current <- c(35, 20, 3, 1)
+time_campus <- data.frame(onsite,before, current, stringsAsFactors=FALSE)
+time_campus %>%
+  mutate(onsite= fct_reorder(onsite, current)) %>%
+  ggplot(aes(x=onsite, y=before)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#89c348") +
+  geom_text(aes(label=before, y = before + 2)) +
+  coord_flip() +
+  labs(title= "Before COVID-19 restrictions, approximately how\nmuch of your time was spent working onsite\nat the Hutch?", x = "", y = "Responses") +
+  theme_minimal()
+time_campus %>%
+  mutate(onsite= fct_reorder(onsite, current)) %>%
+  ggplot(aes(x=onsite, y= current)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#39b6b9") +
+  geom_text(aes(label=current, y = current + 2)) +
+  coord_flip() +
+  labs(title= "In the past month, approximately how much of your\ntime was spent working onsite at the Hutch?", 
+       x = "", y = "") +
+  theme_minimal()
+```
+
+Due to COVID-19 restrictions, survey respondents are reducing their time spent working on campus. A majority of respondants, however, are continuing to work 5 or more days onsite.
+
+## COVID-19 Transportation Impacts
+```{r commute time, echo=FALSE}
+miles <- c("Less than a mile", "1 to 5 miles", "5 to 10 miles",
+              "10 to 15 miles", "15 to 25 miles", "Greater than 25 miles")
+responses <- c(1, 21, 14, 8, 9, 6)
+commute <- data.frame(miles, responses, stringsAsFactors=FALSE)
+commute %>%
+  mutate(miles= fct_relevel(commute$miles, "Less than a mile")) %>%
+  ggplot(aes(x=miles, y= responses)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#207c7e") +
+  geom_text(aes(label=responses, y = responses + 1.5)) +
+  coord_flip() +
+  labs(title= "How long is your commute?", 
+       x = "", y = "Responses") +
+  theme_minimal()
+```
+
+
+```{r tmode and travel, echo=FALSE}
+mode <- c("Driving (personal vehicle)", "Vanpool or carpool", 
+          "Public transportation", "Bike/ walking", "Other")
+before <- c(18, 7, 28, 14, 6)
+current <- c(45, 2, 5, 15, 4)
+travel <- data.frame(mode, before, current, stringsAsFactors=FALSE)
+travel %>%
+  mutate(mode= fct_reorder(mode, before)) %>%
+  ggplot(aes(x=mode, y= before)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#89c348") +
+  geom_text(aes(label=before, y = before + 1.5)) +
+  coord_flip() +
+  labs(title= "Before COVID-19 restrictions, how did you travel to work?", 
+       x = "", y = "") +
+  theme_minimal()
+travel %>%
+  mutate(mode= fct_reorder(mode, before)) %>%
+  ggplot(aes(x=mode, y= current)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#39b6b9") +
+  geom_text(aes(label=current, y = current + 1.5)) +
+  coord_flip() +
+  labs(title= "How are you currently traveling to work?", 
+       x = "", y = "") +
+  theme_minimal()
+```
+
+Before COVID-19 restrictions, a majority of respondents commuted via public transportation. Many have switched to driving a personal vehicle into work, including employees who previously utilized a vanpoon or carpool. 
+
+## Impact of Hutch Free Parking
+
+```{r free parking, echo=FALSE}
+responses <- c("Yes", "No", "Other")
+free <- c(52, 7, 0)
+burden <- c(40, 12, 7)
+sliding_scale <- c(53, 2, 3)
+van_pool <- c(12, 40, 7)
+parking <- data.frame(responses, free, burden, sliding_scale, van_pool, stringsAsFactors=FALSE)
+parking %>%
+  filter(responses != "Other") %>%
+  #mutate(mode= fct_reorder(mode, free)) %>%
+  ggplot(aes(x=responses, y= free)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#207c7e") +
+  geom_text(aes(label=free, y = free + 1.5)) +
+  coord_flip() +
+  labs(title= "In the past month, have you utilized the free Hutch parking?", 
+       x = "", y = "Responses") +
+  theme_minimal()
+```
+
+In the past month, the free parking offered by the Hutch has been highly ultilized by survey respondents.
+
+```{r parking burden, echo=FALSE}
+parking %>%
+  #filter(responses != "Other") %>%
+  mutate(responses= fct_reorder(responses, burden)) %>%
+  ggplot(aes(x=responses, y= burden)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#89c348") +
+  geom_text(aes(label=burden, y = burden + 1.5)) +
+  coord_flip() +
+  labs(title= "A monthly parking pass for the Hutch garages costs $135.\nIs this a significant financial burden for you?", 
+       x = "", y = "") +
+  theme_minimal()
+```
+
+A majority of survey respondents reported that the full price monthly parking pass is a significant financial burden. There was an open question on the survey: *"If the monthly parking pass fee is reinstated at $135, how would this impact your current transportation needs?* Some common responses are paraphrased below-
+
+> I will need to find street parking nearby
+> I will need to buy a monthly pass and deal with the financial costs
+> Public transit options significantly increase commute times, particularly with reduced routes
+Many respondents reported being uncomfortable with reverting to taking public transit during a global pandemic. Some reported living with high-risk individuals. Others reported fears of unintentially exposing their lab members. 
+
+```{r public transit, echo=FALSE}
+rating <- c("1- No Impact", "2", "3", "4", "5- Large Impact")
+responses <- c(8, 1, 5, 7, 38)
+public_transit <- data.frame(rating, responses, stringsAsFactors=FALSE)
+public_transit %>%
+  #filter(responses != "Other") %>%
+  #mutate(responses= fct_reorder(responses, rating)) %>%
+  ggplot(aes(x=rating, y= responses)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#39b6b9") +
+  geom_text(aes(label=responses, y = responses + 1.5)) +
+  #coord_flip() +
+  labs(title= "Has COVID-19 impacted your ability or willingness to use public transit?", 
+       x = "", y = "Responses") +
+  theme_minimal()
+```
+
+## Parking Alternatives
+In the survey, we asked respondents if they would be in support specific alternatives to the full rate monthly parking. 
+
+```{r vanpool, echo=FALSE}
+parking %>%
+  #filter(responses != "Other") %>%
+  mutate(responses= fct_reorder(responses, van_pool)) %>%
+  ggplot(aes(x=responses, y= van_pool)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#207c7e") +
+  geom_text(aes(label=van_pool, y = van_pool + 1.5)) +
+  coord_flip() +
+  labs(title= "Would a vanpool be a good transportation alternative for you?", 
+       x = "", y = "Responses") +
+  theme_minimal()
+```
+
+We asked for further clarification from respondents who reported than a vanpool would not be a good option for them. The most consistant response was that respondents didn't work consistant hours. This is a reality for many technicians, as they need to be able to process clinical samples or work during non-peak hours for specific experiments. When asked *"Would you consider a vanpool if the Hutch assisted in matching up vanpool users?"*, most respondents answered in the negative due to these scheduling issues.
+
+```{r sliding scale, echo=FALSE}
+parking %>%
+  #filter(responses != "Other") %>%
+  mutate(responses= fct_reorder(responses, sliding_scale)) %>%
+  ggplot(aes(x=responses, y= sliding_scale)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#89c348") +
+  geom_text(aes(label=sliding_scale, y = sliding_scale + 1.5)) +
+  coord_flip() +
+  labs(title= "Currently, the Hutch is offering reduced rates for postdoctoral fellows and\ngraduate students. Would you support a reduced monthly parking pass fee\nthat was offered on a sliding scale based on income rather than job title?", 
+       x = "", y = "Responses") +
+  theme_minimal()
+position <- c("Graduate Student", "Post Doc", 
+              "Research Tech I", "Research Tech II", "Research Tech III", "Research Tech IV")
+salary <- c(2110, 4538.2, 4311, 4990, 5777, 6369)
+percentage <- c(3.20, 1.49, 3.13, 2.71, 2.34, 2.12)
+q_salary <- data.frame(position, salary, percentage, stringsAsFactors=FALSE)
+q_salary %>%
+  ggplot(aes(x=position, y=percentage)) +
+  geom_bar(stat = "identity", color = "#123054", fill = "#39b6b9") +
+  geom_text(aes(label=percentage, y = percentage + 0.5)) +
+  labs(title= "\n\nParking costs as a percentage of monthly salaries", x = "", y = "Percentage of monthly salary") +
+  theme_minimal()
+```
+
+A majority of respondents were in support of a sliding scale for the monthly parking fee. Average monthly salaries for post docs and graduate students was taken from the [NIH National Research Service Awards](https://www.niaid.nih.gov/grants-contracts/salary-cap-stipends) set in February, 2020. "Post docs", as refered in the above graph, is the average of levels Postdoc I throgh Postdoc 4. Average monthly salaries for technicians was obtained from [FHCRC Salary Ranges Nov 2019 ‐ Oct 2020](https://centernet.fredhutch.org/cn/u/hr/payroll/_jcr_content/leftParsys/download_2/file.res/FHCRC%2520Salary%2520Ranges%25202019-2020.pdf). Technicians, particulary those with the title "Technician I", face a similar financial burden of monthly parking when compared to graduate students.
+
+A few respondents proposed daily parking rates in addition to monthly parking passes.
+
+The survey also asked *"From DO email: "If you are on campus part-time and find another person who works on opposite days, starting on October 1, you can share a permit and split the costs evenly via payroll deduction. If more than two people want to share a single permit, that is possible, but payroll deduction can only be split between two individuals. Only one person can park per day." Would a shared parking pass be a good transportation alternative for you? If not, please explain."* Responses varied, but a majority of respondents reported being unable to share a parking pass, as they work full-time onsite. 
+
+Respondents were given an opportunity to share additional thoughts on the resumed parking fees. Below are selected responses.
+
+> "The decision is going to effect the lowest paid and highest risk employees the most. If public transportation is safe to take, and the Hutch feels safe with most of their essential on campus employees being required to bus everyday, then it is important to show data on the safety of public transportation during a pandemic."
+> "I was under the impression that parking rates were to encourage use of public transit and vanpool/carpool options in order to reserve the use of limiting parking spaces to those who needed them.  It is disappointing to see parking rates go back in to effect when there are plenty of parking spaces available and there are restrictions/concerns on using public transit and vanpools.  It does seem to disproportionately affect employees who must be on campus to do their work."
+> "Reinstating garage parking all the way up to $135/month in the middle of a global pandemic and economic depression feels like Fred Hutch is broadening the socioeconomic class divide and, frankly, abandoning its most vulnerable members. I know that Fred Hutch is struggling financially, and that very difficult decisions need to be made. I know other companies have made similar decisions without any sympathy for their employees. But working at a company where our goal is first and foremost health for all, it truly hurts that many of us are essentially being told that if we do not have enough money, we have to give up the health of ourselves and our loved ones."
+## October Transportation Changes Update
+
+Transportation sent out an update in mid-September that kept surface lot parking free for employees until King County enters Phase 3. We sent a follow-up email to survey respondents to gage the impact of these changes to their work commute.
+
+The number of respondents for the second survey was low (8 out of 23 contacted), but still informative of the minimal impact these parking changes have on commutes. 7 out of 8 respondents reported that there are not enough surface lot parking spots to cover the demand. Several respondants reiterated the need for a tiered parking cost system, as currently afforded to graduate students and post docs.
+
+Below are survey respondants comments on the Hutch parking fees and transportation options.
+
+> Any kind of sliding scale for lower income employees would be a welcome notification. The surface lots are full by 8:00 am and the nearest free street parking is about a 20 minute walk away. The parking garages have been extremely empty since the change, clearly most of those who have parking permits are not having to park on campus daily.
+> The surface lots have all been filled earlier and earlier each day. On 10/8, they were filled by 8:10am. I'm already required to carpool to increase the chances of finding a parking spot (less cars overall in the lots). Transportation has not yet been able to hand out carpooling permits that I (and others) have requested (I assume due to being overwhelmed with the influx of parking requests). When I can't carpool, I park ~15 min walk away from campus in the few free parking spots in Eastlake. These also require me to get to work ~30-45min before my usual starting time in order to find a spot.
+> There are very minimal parking spots available on surface lots. And parking in the garages costs 4% of my salary! That's more than I put towards retirement at the moment. Parking should be made more affordable for lower-income full-time employees (tiered system) and not appeal only to the folks who make twice as much. I spent over 25 minutes today looking for a spot only to end up parking on the street. This seems to be a daily occurrence since the new changes took place. Public transit and carpool/vanpool just isn't an option for me right now either unfortunately. I've tried really hard to find people to transport with in my area but the folks who are on rideshare are currently either at capacity due to the virus or they are now working at home indefinitely.
+> Technicians must be eligible for the same discounted rate that graduate students and post-docs enjoy.
+> I ended up sharing a permit with a coworker. However, our PI is helping us with funding parking permits as well, and that is what really helps. I didn't want to use the surface lot because I am able to share and because of the assistance from our PI -- I want to leave those spaces open for people who don't have the benefits that I do.
+> The recent changes do not offer a permanent solution to tech's, who make a significant less amount annually and are required to be on campus to do their work. Even once the phases change, we're back to square one because parking will then be charged once again. We are looking for a permanent solution that will create fairness. A tiered system in cost is what we are looking for.
